@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         New Userscript
-// @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  try to take over the world!
-// @author       You
+// @name         Ekşi Lanet Geri Sayıcısı
+// @namespace    https://github.com/ismailceylan/EksiSozlukLanetGerisay/
+// @version      1.0
+// @description  Lanetin bitmesine ne kadar kaldığını görsel olarak izleyin.
+// @author       İsmail Ceylan
 // @match        https://eksisozluk.com/biri/*
 // @grant        none
 // ==/UserScript==
@@ -11,7 +11,6 @@
 ( function()
 {
     'use strict';
-
 
     var styles = `
 @keyframes move
@@ -71,10 +70,10 @@
                       '</div>' );
 
     $( "head" ).append( $( "<style></style>" ).text( styles ));
-    $( "#content-body > p" ).prepend( progress );
+    $( "#content-body > p" ).append( progress );
 
     setInterval( function()
-                {
+    {
         var start = new Date( "Mar 31 2020" );
         var end = new Date( "May 30 2020" );
 
