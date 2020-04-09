@@ -193,7 +193,7 @@
 `;
 
     var progress = $( '<div class="progress">'+
-                           '<span>%0</span>'+
+                           '<span>makine ısınıyor...</span>'+
                            '<div></div>'+
                       '</div>' );
 
