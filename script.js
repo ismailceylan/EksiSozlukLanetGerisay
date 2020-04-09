@@ -212,5 +212,5 @@
         progress.find( "div" ).css( "width", percent + '%' );
         progress.find( "span" ).text( second2time( Math.round( left / 1000 ), "Y MN D hh:mm:ss", false ) + " (%" + percent + ")" );
     },
-    1200 );
+    800 );
 })();
