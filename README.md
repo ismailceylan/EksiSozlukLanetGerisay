@@ -1,7 +1,7 @@
 # EksiSozlukLanetGerisay
 Ekşisözlük'te lanetli çaylak yapıldıysanız lanetin ne kadarı erimiş geriye ne kalmış ilerleme çubuğu yardımıyla görmenizi sağlar.
 
-!["Ekran görüntüsü"](https://cdn.eksisozluk.com/2020/4/8/5/52o2ozzf.png "Ekşisözlük Lanet Süresi Geri Sayım Çubuğu")
+!["Ekran görüntüsü"](https://cdn.eksisozluk.com/2020/4/10/2/2vr7ck2n.png "Ekşisözlük Lanet Süresi Geri Sayım Çubuğu")
 
 # Yükleme
 1. Greasemonkey veya Tampermonkey isimli eklentilerden birini tarayıcınıza kurun.
