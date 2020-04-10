@@ -13,132 +13,132 @@
     "use strict";
 
     var second2time = function( seconds, pattern, shortTerms, noZero )
-    {
-        if( shortTerms === undefined )
+	{
+		if( shortTerms === undefined )
         {
-            shortTerms = true;
+			shortTerms = true;
         }
 
-        if( noZero === undefined )
+		if( noZero === undefined )
         {
-            noZero = true;
+			noZero = true;
         }
 
-        if( Object.prototype.toString.call( seconds ) !== "[object Number]")
+		if( Object.prototype.toString.call( seconds ) !== "[object Number]")
         {
-            seconds = parseInt( seconds, 10 );
+			seconds = parseInt( seconds, 10 );
         }
 
-        if( ! pattern )
+		if( ! pattern )
         {
-            pattern = "H:M:S";
+			pattern = "H:M:S";
         }
 
-        var terms =
-        {
-                y: [ "yıl", "y" ],
-                mn: [ "ay", "a" ],
-                d: [ "gün", "g" ],
-                h: [ "saat", "sa" ],
-                m: [ "dakika", "dk" ],
-                s: [ "saniye", "sn" ]
-        }
+		var terms =
+		{
+			y: [ "yıl", "y" ],
+			mn: [ "ay", "a" ],
+			d: [ "gün", "g" ],
+			h: [ "saat", "sa" ],
+			m: [ "dakika", "dk" ],
+			s: [ "saniye", "sn" ]
+		}
 
-        var Years = 31557600;
-        var Months = 2629800;
-        var Days = 86400;
-        var Hours = 3600;
-        var Minutes = 60;
+		var Years = 31557600;
+		var Months = 2629800;
+		var Days = 86400;
+		var Hours = 3600;
+		var Minutes = 60;
 
-        var years = Math.floor( seconds / Years );
-        var years_ = ( years * Years );
-        var months = Math.floor(( seconds - years_ ) / Months );
-        var months_ = ( months * Months );
-        var days = Math.floor(( seconds - years_ - months_ ) / Days );
-        var days_ = ( days * Days );
-        var hours = Math.floor(( seconds - years_ - months_ - days_ ) / Hours );
-        var hours_ = ( hours * Hours );
-        var minutes = Math.floor(( seconds - years_ - months_ - days_ - hours_ ) / Minutes );
-        var minutes_ = ( minutes * Minutes );
-        var secs = seconds - years_ - months_ - days_ - hours_ - minutes_;
+		var years = Math.floor( seconds / Years );
+		var years_ = ( years * Years );
+		var months = Math.floor(( seconds - years_ ) / Months );
+		var months_ = ( months * Months );
+		var days = Math.floor(( seconds - years_ - months_ ) / Days );
+		var days_ = ( days * Days );
+		var hours = Math.floor(( seconds - years_ - months_ - days_ ) / Hours );
+		var hours_ = ( hours * Hours );
+		var minutes = Math.floor(( seconds - years_ - months_ - days_ - hours_ ) / Minutes );
+		var minutes_ = ( minutes * Minutes );
+ 		var secs = seconds - years_ - months_ - days_ - hours_ - minutes_;
 
-        var trimming = function( value )
-        {
-                if( noZero && value < 1 )
-                {
-                        return "";
-                }
+		var trimming = function( value )
+		{
+			if( noZero && value < 1 )
+            {
+				return "";
+            }
 
-                return value;
-        }
+			return value;
+		}
 
-        var naming = function( group, value )
-        {
-                if( ! value )
-                {
-                        return value;
-                }
+		var naming = function( group, value )
+		{
+			if( ! value )
+            {
+				return value;
+            }
 
-                if( ! shortTerms )
-                {
-                        value += " ";
-                }
+			if( ! shortTerms )
+            {
+				value += " ";
+            }
 
-                return value + terms[ group ][ shortTerms? 1 : 0 ];
-        }
+			return value + terms[ group ][ shortTerms? 1 : 0 ];
+		}
 
-        var padding = function( value )
-        {
-                return value.toString().padStart( 2, "0" );
-        }
+		var padding = function( value )
+		{
+			return value.toString().padStart( 2, "0" );
+		}
 
-        var nt = function( group, value )
-        {
-                return naming( group, trimming( value ));
-        }
+		var nt = function( group, value )
+		{
+			return naming( group, trimming( value ));
+		}
 
-        var np = function( group, value )
-        {
-                return naming( group, padding( value ));
-        }
+		var np = function( group, value )
+		{
+			return naming( group, padding( value ));
+		}
 
-        var replacementMap =
-        [
-                [ "Y", nt( "y", years )],
-                [ "MN", nt( "mn", months )],
-                [ "D", nt( "d", days )],
+		var replacementMap =
+		[
+			[ "Y", nt( "y", years )],
+			[ "MN", nt( "mn", months )],
+			[ "D", nt( "d", days )],
 
-                [ /hh\*/i, np( "h", hours )],
-                [ /h\*/i, naming( "h", hours )],
-                [ /hh/i, padding( hours )],
-                [ /h/i, hours ],
+			[ /hh\*/i, np( "h", hours )],
+			[ /h\*/i, naming( "h", hours )],
+			[ /hh/i, padding( hours )],
+			[ /h/i, hours ],
 
-                [ /mm\*/, np( "m", minutes )],
-                [ /m\*/, naming( "m", minutes )],
-                [ /mm/, padding( minutes )],
-                [ /m/, minutes ],
+			[ /mm\*/, np( "m", minutes )],
+			[ /m\*/, naming( "m", minutes )],
+			[ /mm/, padding( minutes )],
+			[ /m/, minutes ],
 
-                [ /ss\*/, np( "s", secs )],
-                [ /s\*/, naming( "s", secs )],
-                [ /ss/, padding( secs )],
-                [ /s/, secs ],
-        ];
+			[ /ss\*/, np( "s", secs )],
+			[ /s\*/, naming( "s", secs )],
+			[ /ss/, padding( secs )],
+			[ /s/, secs ],
+		];
 
-        var data = [];
+		var data = [];
 
-        replacementMap.forEach( function( item, i )
-        {
-                pattern = pattern.replace( item[ 0 ], "{#" + i + "}" );
-                data.push( item[ 1 ]);
-        });
+		replacementMap.forEach( function( item, i )
+		{
+			pattern = pattern.replace( item[ 0 ], "{#" + i + "}" );
+			data.push( item[ 1 ]);
+		});
 
-        data.forEach( function( value, i )
-        {
-                pattern = pattern.replace( "{#" + i + "}", value );
-        });
+		data.forEach( function( value, i )
+		{
+			pattern = pattern.replace( "{#" + i + "}", value );
+		});
 
-        return pattern.trim();
-}
+		return pattern.trim();
+	}
 
     var styles = `
 @keyframes move
@@ -197,13 +197,29 @@
                            '<div></div>'+
                       '</div>' );
 
-    $( "head" ).append( $( "<style></style>" ).text( styles ));
-    $( "#content-body > p" ).append( progress );
-
-    setInterval( function()
+    var target = $( "#content-body > p" );
+    var matches = target.text().match( /([0-9]{1,2}) (.*) ([0-9]{4}) ile ([0-9]{1,2}) (.*) ([0-9]{4})/ );
+    var dates = ( function()
     {
-        var start = new Date( "Mar 31 2020" );
-        var end = new Date( "May 30 2020" );
+        var r = { start: "", end: "" }
+
+        function toEng( name )
+        {
+            var tr = [ "ocak", "şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos", "eylül", "ekim", "kasım", "aralık" ];
+            var eng = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+            return eng[ tr.indexOf( name )]
+        }
+
+        r.start = toEng( matches[ 2 ]) + " " + matches[ 1 ] + " " + matches[ 3 ];
+        r.end = toEng( matches[ 5 ]) + " " + matches[ 4 ] + " " + matches[ 6 ];
+
+        return r;
+    })();
+
+    function refresh()
+    {
+        var start = new Date( dates.start );
+        var end = new Date( dates.end );
         var left = end - new Date;
         var total = end - start;
 
@@ -211,6 +227,12 @@
 
         progress.find( "div" ).css( "width", percent + '%' );
         progress.find( "span" ).text( second2time( Math.round( left / 1000 ), "Y MN D hh:mm:ss", false ) + " (%" + percent + ")" );
-    },
-    800 );
+    }
+
+    $( "head" ).append( $( "<style></style>" ).text( styles ));
+    target.append( progress );
+
+    refresh();
+
+    setInterval( refresh, 1000 );
 })();
