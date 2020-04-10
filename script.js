@@ -191,8 +191,7 @@
                       '</div>' );
 
     var target = $( "#content-body > p" );
-    var matches = target.text().match( /([0-9]{1,2}) (.*) ([0-9]{4}) ile ([0-9]{1,2}) (.*) ([0-9]{4})/ );
-    var dates = ( function()
+    var dates = ( function( matches )
     {
         var r = { start: "", end: "" }
 
@@ -207,7 +206,8 @@
         r.end = toEng( matches[ 5 ]) + " " + matches[ 4 ] + " " + matches[ 6 ] + " 23:59:00";
 
         return r;
-    })();
+    })
+    ( target.text().match( /([0-9]{1,2}) (.*) ([0-9]{4}) ile ([0-9]{1,2}) (.*) ([0-9]{4})/ ));
 
     function refresh()
     {
