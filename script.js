@@ -15,24 +15,20 @@
     var second2time = function( seconds, pattern, shortTerms, noZero )
 	{
 		if( shortTerms === undefined )
-        {
+
 			shortTerms = true;
-        }
 
 		if( noZero === undefined )
-        {
+
 			noZero = true;
-        }
 
 		if( Object.prototype.toString.call( seconds ) !== "[object Number]")
-        {
+
 			seconds = parseInt( seconds, 10 );
-        }
 
 		if( ! pattern )
-        {
+
 			pattern = "H:M:S";
-        }
 
 		var terms =
 		{
@@ -65,9 +61,8 @@
 		var trimming = function( value )
 		{
 			if( noZero && value < 1 )
-            {
+
 				return "";
-            }
 
 			return value;
 		}
@@ -75,14 +70,12 @@
 		var naming = function( group, value )
 		{
 			if( ! value )
-            {
+
 				return value;
-            }
 
 			if( ! shortTerms )
-            {
+
 				value += " ";
-            }
 
 			return value + terms[ group ][ shortTerms? 1 : 0 ];
 		}
