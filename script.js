@@ -211,7 +211,7 @@
         }
 
         r.start = toEng( matches[ 2 ]) + " " + matches[ 1 ] + " " + matches[ 3 ];
-        r.end = toEng( matches[ 5 ]) + " " + matches[ 4 ] + " " + matches[ 6 ];
+        r.end = toEng( matches[ 5 ]) + " " + matches[ 4 ] + " " + matches[ 6 ] + " 23:59:00";
 
         return r;
     })();
