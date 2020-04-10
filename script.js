@@ -193,19 +193,17 @@
     var target = $( "#content-body > p" );
     var dates = ( function( matches )
     {
-        var r = { start: "", end: "" }
-
         function toEng( name )
         {
             var tr = [ "ocak", "şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos", "eylül", "ekim", "kasım", "aralık" ];
             var eng = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-            return eng[ tr.indexOf( name )]
+            return eng[ tr.indexOf( name )];
         }
 
-        r.start = toEng( matches[ 2 ]) + " " + matches[ 1 ] + " " + matches[ 3 ];
-        r.end = toEng( matches[ 5 ]) + " " + matches[ 4 ] + " " + matches[ 6 ] + " 23:59:00";
-
-        return r;
+        return {
+		    start: toEng( matches[ 2 ]) + " " + matches[ 1 ] + " " + matches[ 3 ],
+            end: toEng( matches[ 5 ]) + " " + matches[ 4 ] + " " + matches[ 6 ] + " 23:59:00"
+	    }
     })
     ( target.text().match( /([0-9]{1,2}) (.*) ([0-9]{4}) ile ([0-9]{1,2}) (.*) ([0-9]{4})/ ));
 
@@ -220,12 +218,12 @@
 
         progress.find( "div" ).css( "width", percent + '%' );
         progress.find( "span" ).text( second2time( Math.round( left / 1000 ), "Y MN D hh:mm:ss", false ) + " (%" + percent + ")" );
+        
+        return refresh;
     }
 
     $( "head" ).append( $( "<style></style>" ).text( styles ));
     target.append( progress );
 
-    refresh();
-
-    setInterval( refresh, 1000 );
+    setInterval( refresh(), 1000 );
 })();
